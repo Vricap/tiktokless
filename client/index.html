@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiktokless</title>
+    <style>
+      body {
+        background-color: rgb(0, 0, 0);
+        color: aliceblue;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btns {
+        display: flex;
+        gap: 63px;
+      }
+
+      .btn {
+        cursor: pointer;
+        border: solid 1px white;
+        color: aliceblue;
+        font-size: 16px;
+        width: 60px;
+        height: 30px;
+        background-color: inherit;
+      }
+
+      .btn:active {
+        background-color: aliceblue;
+        color: black;
+      }
+
+      .form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background-color: black;
+        width: 320px;
+        height: 50px;
+        position: absolute;
+        top: 170px;
+        border: 1px solid white;
+        border-radius: 10px;
+      }
+
+      .unactive {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><em>Consume tiktok without tiktok.</em></h1>
+    <div class="wrapper">
+      <iframe
+        id="content-frame"
+        src="{{ .Init }}"
+        scrolling="no"
+        style="
+          height: 560px;
+          border: -10px none;
+          width: 300px;
+          margin-top: 0px;
+          margin-left: 0px;
+          margin-right: 0px;
+        "
+      >
+      </iframe>
+    </div>
+    <div class="btns">
+      <button class="btn prevBtn">Prev</button>
+      <button class="btn addBtn">Add</button>
+      <button class="btn nextBtn">Next</button>
+    </div>
+
+    <div class="form unactive">
+      <form action="/add" method="post">
+        <input type="text" name="data" placeholder="Paste the url here" />
+        <button type="submit">Add</button>
+      </form>
+    </div>
+
+    <script>
+      const iframe = document.getElementById("content-frame");
+      const nextBtn = document.querySelector(".nextBtn");
+      const prevBtn = document.querySelector(".prevBtn");
+      const addBtn = document.querySelector(".addBtn");
+      const form = document.querySelector(".form");
+
+      let source = "{{ .Source }}";
+      // parse slice format from go to array javasript
+      source = source.replace(/\[|\]/g, "").split(" ");
+      // we will render the video from the back (the newest).
+      let counter = source.length - 1;
+
+      // render next video
+      nextBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        if (counter > 0) {
+          counter -= 1;
+          iframe.src = source[counter];
+        }
+      });
+
+      // render previous video
+      prevBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        if (counter < source.length - 1) {
+          counter += 1;
+          iframe.src = source[counter];
+        }
+      });
+
+      // add video
+      addBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        form.classList.toggle("unactive");
+      });
+    </script>
+  </body>
+</html>
+
+<!-- const fetchData = async function (url) {
+  const respon = await fetch(url);
+  data = await respon.json();
+  return data;
+};
+
+let data;
+let counter = 0;
+(async () => {
+  data = await fetchData("http://127.0.0.1:8000/");
+
+  // render next video
+  nextBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if (counter < data.length - 1) {
+      counter += 1;
+      iframe.src = data[counter];
+    }
+  });
+
+  // render previous video
+  prevBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if (counter > 0) {
+      counter -= 1;
+      iframe.src = data[counter];
+    }
+  });
+})(); -->

@@ -20,6 +20,7 @@ func main()  {
 	router := gin.Default()
 	router.Use(cors.Default())
 	router.LoadHTMLGlob("client/*")
+	router.Static("/static", "./client")
 
 	router.GET("/", func(c *gin.Context) {
 		jsonData := readData("data/tiktok.json")

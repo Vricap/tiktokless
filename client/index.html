@@ -3,54 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/style.css" />
     <title>Tiktokless</title>
-    <style>
-      body {
-        background-color: rgb(0, 0, 0);
-        color: aliceblue;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .btns {
-        display: flex;
-        gap: 63px;
-      }
-
-      .btn {
-        cursor: pointer;
-        border: solid 1px white;
-        color: aliceblue;
-        font-size: 16px;
-        width: 60px;
-        height: 30px;
-        background-color: inherit;
-      }
-
-      .btn:active {
-        background-color: aliceblue;
-        color: black;
-      }
-
-      .form {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        background-color: black;
-        width: 320px;
-        height: 50px;
-        position: absolute;
-        top: 170px;
-        border: 1px solid white;
-        border-radius: 10px;
-      }
-
-      .unactive {
-        display: none;
-      }
-    </style>
   </head>
   <body>
     <h1><em>Consume tiktok without tiktok.</em></h1>
@@ -125,35 +79,3 @@
     </script>
   </body>
 </html>
-
-<!-- const fetchData = async function (url) {
-  const respon = await fetch(url);
-  data = await respon.json();
-  return data;
-};
-
-let data;
-let counter = 0;
-(async () => {
-  data = await fetchData("http://127.0.0.1:8000/");
-
-  // render next video
-  nextBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    if (counter < data.length - 1) {
-      counter += 1;
-      iframe.src = data[counter];
-    }
-  });
-
-  // render previous video
-  prevBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    if (counter > 0) {
-      counter -= 1;
-      iframe.src = data[counter];
-    }
-  });
-})(); -->

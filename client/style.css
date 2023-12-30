@@ -1,0 +1,45 @@
+body {
+  background-color: rgb(0, 0, 0);
+  color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btns {
+  display: flex;
+  gap: 63px;
+}
+
+.btn {
+  cursor: pointer;
+  border: solid 1px white;
+  color: aliceblue;
+  font-size: 16px;
+  width: 60px;
+  height: 30px;
+  background-color: inherit;
+}
+
+.btn:active {
+  background-color: aliceblue;
+  color: black;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: black;
+  width: 320px;
+  height: 50px;
+  position: absolute;
+  top: 170px;
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+.unactive {
+  display: none;
+}

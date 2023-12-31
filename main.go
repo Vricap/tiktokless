@@ -16,6 +16,8 @@ func main()  {
 	if err != nil {
 		panic(err)
 	}
+	dataPath := os.Getenv("DATAPATH")
+	jsonData := readData(dataPath)
 
 	router := gin.Default()
 	router.Use(cors.Default())
@@ -23,13 +25,13 @@ func main()  {
 	router.Static("/static", "./client")
 
 	router.GET("/", func(c *gin.Context) {
-		jsonData := readData("data/tiktok.json")
+		jsonData := readData(dataPath)
 		c.HTML(200, "index.html", gin.H{"Source": jsonData, "Init": jsonData[len(jsonData) - 1]})
 		// c.JSON(200, jsonData)
 	})
 
 	router.POST("/add", func(c *gin.Context) {
-		writeData(c)
+		writeData(c, dataPath, jsonData)
 		
 		c.Redirect(301, "/")
 	})
@@ -79,13 +81,13 @@ func embed(c *gin.Context) string {
 	return UrlPrefix
 }
 
-func writeData(c *gin.Context)  {
+func writeData(c *gin.Context, dataPath string, jsonData []string)  {
 	url := embed(c)
-	jsonData := readData("data/tiktok.json")
+	
 	jsonData = append(jsonData, url)
 	json, err := json.Marshal(jsonData)
 	if err != nil {
 		return
 	}
-	os.WriteFile("data/tiktok.json", json, os.ModePerm)
+	os.WriteFile(dataPath, json, os.ModePerm)
 }

@@ -9,6 +9,7 @@ body {
 .btns {
   display: flex;
   gap: 63px;
+  margin-bottom: -10px;
 }
 
 .btn {
@@ -42,4 +43,11 @@ body {
 
 .unactive {
   display: none;
+}
+
+.index-info {
+  color: blueviolet;
+  font-style: italic;
+  text-decoration: underline;
+  cursor: pointer;
 }

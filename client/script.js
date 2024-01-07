@@ -5,6 +5,7 @@ const addBtn = document.querySelector(".addBtn");
 const form = document.querySelector(".form");
 const indexInfo = document.querySelector(".index-info");
 const indexForm = document.querySelector(".index-form");
+const delBtn = document.querySelector(".delBtn");
 
 // parse slice format from go to array javasript
 source = source.replace(/\[|\]/g, "").split(" ");
@@ -63,3 +64,19 @@ function goTo() {
   indexInfo.textContent = `Videos ${indexConter} of ${source.length}`;
   counter = index;
 }
+
+// Delete video
+delBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  fetch("/delete", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: counter,
+  }).then((response) => {
+    fetch(response.url);
+    return location.reload();
+  });
+});

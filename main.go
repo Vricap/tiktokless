@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/gin-contrib/cors"
@@ -17,7 +18,7 @@ func main()  {
 		panic(err)
 	}
 	dataPath := os.Getenv("DATAPATH")
-	jsonData := readData(dataPath)
+	var jsonData []string
 
 	router := gin.Default()
 	router.Use(cors.Default())
@@ -31,8 +32,25 @@ func main()  {
 	})
 
 	router.POST("/add", func(c *gin.Context) {
-		writeData(c, dataPath, jsonData)
+		jsonData = readData(dataPath)
+		url := embed(c)
+		writeData(c, dataPath, jsonData, url)
 		
+		c.Redirect(301, "/")
+	})
+
+	router.DELETE("/delete", func(c *gin.Context) {
+		data, err := io.ReadAll(c.Request.Body)
+		if err != nil {
+			return
+		}
+
+		jsonData := readData(dataPath)
+		index, _ := strconv.Atoi(string(data))
+		jsonData = append(jsonData[:index], jsonData[index+1:]...)
+		json, _ := json.Marshal(jsonData)
+		os.WriteFile(dataPath, json, os.ModePerm)
+
 		c.Redirect(301, "/")
 	})
 
@@ -81,9 +99,7 @@ func embed(c *gin.Context) string {
 	return UrlPrefix
 }
 
-func writeData(c *gin.Context, dataPath string, jsonData []string)  {
-	url := embed(c)
-	
+func writeData(c *gin.Context, dataPath string, jsonData []string, url string)  {
 	jsonData = append(jsonData, url)
 	json, err := json.Marshal(jsonData)
 	if err != nil {

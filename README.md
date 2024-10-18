@@ -1,4 +1,6 @@
-# tiktokless
+# tiktokless  
+
+![Tux, example](/screenshot/example.png)  
 
 **Cosume** Tiktok _without_ Tiktok.
 
